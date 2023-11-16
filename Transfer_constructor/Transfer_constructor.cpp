@@ -24,6 +24,12 @@ public:
         cout << "DynArray конструктор копирования " << size <<
             " Адрес: " << this << endl;
     }
+    DynArray(DynArray&& object) : arr{ object.arr }, size{ object.size } {
+        object.arr = nullptr;
+        object.size = 0;
+        cout << "DynArray rval конструктор " << size
+            << " Адресс: " << this << endl;
+    }
     ~DynArray() {
         cout << "DEST" << this << " Адрес arr: " << arr << endl;
         delete[] arr;
@@ -82,7 +88,7 @@ void funB(int& val) {
     cout << " int \n";
 }
 void funB(const int& val) {
-    cout << "funb int&& \n";
+    cout << "funb const int& \n";
 }
 
 int main()
@@ -101,29 +107,13 @@ int main()
     cout << "Arr3: " << endl;
     arr3.print();
 
-    arr3 = arr2;
+    /*arr3 = arr2;
     cout << "Arr3 = Arr2, Arr3 = " << endl;
-    arr3.print();
+    arr3.print();*/
 
-
-    int val = 42;
-
-    const int cVal = 26;
-
-    funA(val);
-    funA(cVal);
-    funA(67 + 6);
-    funA(move(val));
-
-    funB(val);
-    funB(cVal);
-
-
-
-    
-
-
-
+    DynArray arr4(move(arr2));
+    cout << "arr4(move(arr2)) " << endl;
+    arr4.print();
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"

@@ -2,6 +2,29 @@
 //
 
 #include <iostream>
+using namespace std;
+class DynArray {
+    int* arr;
+    int size;
+public:
+    DynArray() : DynArray(5) {}
+    DynArray(int size) : arr{ new int[size]}, size{size}
+    {
+        cout << "DynArray конструктор размера " << size
+            << " Адресс: " << this << endl;
+    }
+    DynArray(const DynArray& object){
+        size = object.size;
+        arr = new int[size];
+        for (size_t i = 0; i < size; i++)
+        {
+            arr[i] = object.arr[i];
+        }
+        cout << "DynArray конструктор копирования " << size <<
+            " Адрес: " << this << endl;
+
+    }
+};
 
 int main()
 {

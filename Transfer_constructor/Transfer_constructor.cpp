@@ -24,6 +24,10 @@ public:
         cout << "DynArray конструктор копирования " << size <<
             " Адрес: " << this << endl;
     }
+    ~DynArray() {
+        cout << "DEST" << this << " Адрес arr: " << arr << endl;
+        delete[] arr;
+    }
     DynArray& operator=(const DynArray& object) {
         
         if (!(this == &object)) {
@@ -42,7 +46,7 @@ public:
         return *this;
     }
     int getElem(int id) const {
-        
+        return arr[id];
     }
     void setElem(int index, int value) {
         arr[index] = value;
@@ -64,6 +68,23 @@ public:
 };
 
 
+void funA(int& val) {
+    cout << "funA int& \n";
+}
+void funA(const int& val) {
+    cout << "funA cons int& \n";
+}
+void funA(int&& val) {
+    cout << "funA int&& \n";
+}
+
+void funB(int& val) {
+    cout << " int \n";
+}
+void funB(const int& val) {
+    cout << "funb int&& \n";
+}
+
 int main()
 {
     srand(time(NULL));
@@ -72,9 +93,37 @@ int main()
     arr1.randomize();
     cout << "Arr1: " << endl;
     arr1.print();
-    arr1.randomize();
-    cout << "Arr1: " << endl;
-    arr1.print();
+    DynArray arr2;
+    arr2.randomize();
+    cout << "Arr2: " << endl;
+    arr2.print();
+    DynArray arr3(arr1);
+    cout << "Arr3: " << endl;
+    arr3.print();
+
+    arr3 = arr2;
+    cout << "Arr3 = Arr2, Arr3 = " << endl;
+    arr3.print();
+
+
+    int val = 42;
+
+    const int cVal = 26;
+
+    funA(val);
+    funA(cVal);
+    funA(67 + 6);
+    funA(move(val));
+
+    funB(val);
+    funB(cVal);
+
+
+
+    
+
+
+
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"

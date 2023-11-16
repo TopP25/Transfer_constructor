@@ -2,6 +2,7 @@
 //
 
 #include <iostream>
+#include <ctime>
 using namespace std;
 class DynArray {
     int* arr;
@@ -22,13 +23,58 @@ public:
         }
         cout << "DynArray конструктор копирования " << size <<
             " Адрес: " << this << endl;
-
+    }
+    DynArray& operator=(const DynArray& object) {
+        
+        if (!(this == &object)) {
+            if (size != object.size) {
+                delete[] arr;
+                arr = new int[object.size];
+            }
+            size = object.size;
+            for (size_t i = 0; i < size; i++)
+            {
+                arr[i] = object.arr[i];
+            }
+        }
+        cout << "DynArray оператор присваивания " << size <<
+            " Адрес: " << this << endl;
+        return *this;
+    }
+    int getElem(int id) const {
+        
+    }
+    void setElem(int index, int value) {
+        arr[index] = value;
+    }
+    void print() const {
+        for (size_t i = 0; i < size; i++)
+        {
+            cout << arr[i] << ' ';
+        }
+        cout << endl;
+    }
+    void randomize() {
+        
+        for (size_t i = 0; i < size; i++)
+        {
+            arr[i] = rand() % 10;
+        }
     }
 };
 
+
 int main()
 {
-    std::cout << "Hello World!\n";
+    srand(time(NULL));
+    setlocale(LC_ALL, "rus");
+    DynArray arr1(10);
+    arr1.randomize();
+    cout << "Arr1: " << endl;
+    arr1.print();
+    arr1.randomize();
+    cout << "Arr1: " << endl;
+    arr1.print();
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
